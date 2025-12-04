@@ -1,0 +1,72 @@
+﻿@using Obligatorio.DTOs.DTOs.DTOsUsuario
+@model List<DTOUsuario>
+
+@{
+    ViewData["Title"] = "Listar Usuarios por Monto";
+}
+
+<h1>Listar por Monto</h1>
+
+<h4>Usuario</h4>
+<hr />
+<form method="post" asp-action="ListarUsuariosPorMonto">
+    <label for="monto">Monto:</label>
+    <input type="number" name="monto" id="monto" />
+    <button type="submit">Consultar</button>
+</form>
+
+@ViewBag.Mensaje
+
+<hr />
+
+@if (Model != null && Model.Count > 0)
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>
+                    Nombre
+                </th>
+                <th>
+                    Apellido
+                </th>
+                <th>
+                    Email
+                </th>
+                <th>
+                    Rol
+                </th>
+                <th>
+                    Equipo
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var user in Model)
+            {
+                <tr>
+                    <td>
+                        @user.Nombre
+                    </td>
+                    <td>
+                        @user.Apellido
+                    </td>
+                    <td>
+                        @user.Email
+                    </td>
+                    <td>
+                        @user.Rol.ToString()
+                    </td>
+                    <td>
+                        @user.Equipo
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+
+<div>
+    <a asp-area="" asp-controller="Home" asp-action="Index">Back to Home</a>
+</div>

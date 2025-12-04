@@ -1,0 +1,95 @@
+﻿@model Obligatorio.WebApp.Models.AltaPagoVM
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<h1>Create</h1>
+
+<h4>Pago</h4>
+
+@ViewBag.Mensaje
+
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Create" id="formAlta">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div>
+                <div>
+                    <label>Tipo de Pago</label>
+                    <select class="form-select" asp-for="Dto.TipoPago">
+
+                        <option value="Unico">Único</option>
+                        <option value="Recurrente">Recurrente</option>
+
+                    </select>
+                </div>
+
+                <div>
+                    <label>Tipo de Gasto</label>
+                    <select class="form-select" asp-for="Dto.IdGasto">
+                        @foreach (var tipoGasto in Model.TodosLosGastos)
+                        {
+                            <option value="@tipoGasto.Id">@tipoGasto.Nombre</option>
+                        }
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label>Método de Pago</label>
+                    <select class="form-select" asp-for="Dto.MetodoPago">
+
+                        
+                            @foreach (var metodoPago in Model.TodosLosMetodosDePago)
+                            {
+                                <option value="@metodoPago.Nombre">@(char.ToUpper(metodoPago.Nombre[0]) + metodoPago.Nombre.Substring(1).ToLower())</option>
+                            }
+                        
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label asp-for="Dto.Descripcion" class="control-label"></label>
+                    <input asp-for="Dto.Descripcion" class="form-control" />
+                    <span asp-validation-for="Dto.Descripcion" class="text-danger"></span>
+                </div>
+
+                <div class="form-group">
+                    <label asp-for="Dto.Monto" class="control-label"></label>
+                    <input asp-for="Dto.Monto" class="form-control" />
+                    <span asp-validation-for="Dto.Monto" class="text-danger"></span>
+                </div>
+
+
+                <div class="form-group">
+                    <label asp-for="Dto.FechaInicio" class="control-label"></label>
+                    <input asp-for="Dto.FechaInicio" class="form-control" type="date" />
+                    <span asp-validation-for="Dto.FechaInicio" class="text-danger"></span>
+                </div>
+
+                <div id="opcionesRecurrente">
+                    <label asp-for="Dto.FechaFin" class="control-label"></label>
+                    <input asp-for="Dto.FechaFin" class="form-control" type="date" />
+                    <span asp-validation-for="Dto.FechaFin" class="text-danger"></span>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-area="" asp-controller="Home" asp-action="Index">Back to Home</a>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}
+
+<script src="~/js/Pago/AltaPago.js"></script>

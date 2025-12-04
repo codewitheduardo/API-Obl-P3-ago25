@@ -1,0 +1,67 @@
+﻿@using Obligatorio.DTOs.DTOs.DTOsPago
+@model List<DTOPago>
+
+@{
+    ViewData["Title"] = "Listar Pagos por Mes y Año";
+}
+
+<h1>Listar por Mes y Año</h1>
+
+<h4>Pago</h4>
+<hr />
+<form method="post" asp-action="ListarPagosPorMesAnio">
+    <label for="mes">Mes:</label>
+    <select name="mes" id="mes">
+        @for (int m = 1; m <= 12; m++)
+        {
+            <option value="@m">@m</option>
+        }
+    </select>
+    <label for="anio">Año:</label>
+    <input type="number" name="anio" id="anio" value="@DateTime.Now.Year" min="2000" />
+    <button type="submit">Consultar</button>
+</form>
+
+@ViewBag.Mensaje
+
+<hr />
+@if (Model != null && Model.Count > 0)
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Método Pago</th>
+                <th>Gasto</th>
+                <th>Usuario</th>
+                <th>Email</th>
+                <th>Monto Final</th>
+                <th>Tipo Pago</th>
+                <th>Saldo Pendiente</th>
+                <th>Fecha Inicio</th>
+                <th>Fecha Fin</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var pago in Model)
+            {
+                <tr>
+                    <td>@pago.Id</td>
+                    <td>@pago.MetodoPago</td>
+                    <td>@pago.Gasto</td>
+                    <td>@pago.UsuarioNombre</td>
+                    <td>@pago.UsuarioEmail</td>
+                    <td>$ @pago.MontoFinal</td>
+                    <td>@pago.TipoPago</td>
+                    <td>$ @pago.SaldoPendiente.ToString("F2")</td>
+                    <td>@pago.FechaInicio</td>
+                    <td>@pago.FechaFin</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+
+<div>
+    <a asp-area="" asp-controller="Home" asp-action="Index">Back to Home</a>
+</div>
